@@ -1,8 +1,8 @@
 titulo:
   fonte
-  cor
     obs:
       texto tamanho fixo
+
 titulo secundário:
   fonte
   tamanho da letra
