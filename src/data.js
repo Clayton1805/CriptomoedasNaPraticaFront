@@ -6,7 +6,7 @@ const ola = [
       text: 'Super texto FODA',
       color: '#23238E',
       fontFamily: "'Poppins', sans-serif",
-      fontSize: '12px',
+      fontSize: '20px',
     }
   },
   {

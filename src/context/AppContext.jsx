@@ -1,5 +1,5 @@
 import { createContext } from 'react';
 
-const BeersAppContext = createContext();
+const AppContext = createContext();
 
-export default BeersAppContext;
+export default AppContext;
