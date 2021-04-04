@@ -7,10 +7,13 @@ const data = require('../data');
 
 function Provider({ children }) {
   const [arrayContent, setArrayContent] = useState(data);
+  const [editorState, setEditorState] = useState();  
 
   const contextValue = {
     arrayContent,
     setArrayContent,
+    editorState,
+    setEditorState,
   };
 
   return (

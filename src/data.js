@@ -33,7 +33,7 @@ const ola = [
       span: [
         {
           position: 1,
-          spanText: 'super colorido',
+          spanText: 'col',
           color: '#21a809',
           fontWeight: 'bold'
         }

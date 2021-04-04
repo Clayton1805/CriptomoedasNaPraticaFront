@@ -1,25 +1,16 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { ArticleTextComponent, ArticleTitleSecondaryComponent } from '../components';
+import AppContext from '../context/AppContext';
 
 const data = require('../data');
 
 function ArticlePage() {
-  const [arrayContent, setArrayContent] = useState(data);
+  const {
+    editorState,
+    setEditorState,
+  } = useContext(AppContext);
 
-  return (
-    <div name="conteúdo">
-      {
-        arrayContent.map((element) => {
-          const content = element.content;
-          switch (element.type) {
-            case 'titleSecondary': return <ArticleTitleSecondaryComponent content={ content } />
-            case 'text': return <ArticleTextComponent content={ content } />;
-            default: return <></>;
-          }
-        })
-      }
-    </div>
-  );
+  return (editorState);
 }
 
 export default ArticlePage;

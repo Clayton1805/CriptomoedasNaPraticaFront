@@ -1,89 +1,126 @@
 import React, { useContext, useRef, useState } from "react";
-import ContentEditable from "react-contenteditable";
+// import { EditorState } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
 import AppContext from "../context/AppContext";
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import '../style/DraftTextComponent.css'
+import { ContentState, convertToRaw, EditorState } from "draft-js";
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
 
 function DraftTextComponent({ content }) {
-  const {
-    setArrayContent,
-  } = useContext(AppContext);
-
-  const {
-    textFormat: {
-      color,
-      fontSize,
-      fontFamily,
-    },
-    span,
-    link,
-    text,
-  } = content;
-
-  const contentFunc = () => text
-    .reduce((array, elementText, index) => {
-      array.push(elementText);
-
-      const objLink = link.find(({ position }) => position === index);
-
-      if (objLink) {
-        const linkText = objLink.linkText
-          ? objLink.linkText
-          : objLink.url
-        
-        array.push(
-          `<a href=${objLink.url}
-            style='color:#5C3317;'
-          >${linkText}</a>`
-        );
-        return array;
-      }
-
-      const objSpan = span.find(({ position }) => position === index);
-
-      if (objSpan) {
-        array.push(
-          `<strong
-            style='color:#5C3317;'
-          >
-            ${objSpan.spanText}
-          </strong>`
-        );
-        return array;
-      }
-
-      return array;
-    }, []);
-  
-  // const [statusContent, setStatusContent] = useState();
-  const text2 = useRef(contentFunc().join(''));
-  
-  // const funcOla = ({ target }) => {
-  //   // console.log('olaa', target.innerHTML)
-  //   setStatusContent(target.innerText);
-  // }
-
-  const handleChange = evt => {
-    console.log('handleChange', evt.target.value)
-    text2.current = evt.target.value;
-  };
-
-  const handleBlur = () => {
-    console.log('handleBlur', text2.current);
-  };
+  // const {
+  //   editorState,
+  //   setEditorState,
+  // } = useContext(AppContext);
+  const html = '<p>Hey this <strong>editor</strong> rocks 😀</p>';
+  const contentBlock = htmlToDraft(html);
+  const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+  const editorState2 = EditorState.createWithContent(contentState);
+  const [editorState, setEditorState] = useState(editorState2);  
 
   return (
-    <div>
-      <ContentEditable
-        style={{
-          color: '#21a809',
-        }}
-        html={text2.current}
-        onBlur={handleBlur}
-        onChange={handleChange} />
-    </div>
+    <>
+      <Editor
+        editorState={editorState}
+        wrapperClassName="demo-wrapper"
+        editorClassName="demo-editor"
+        onEditorStateChange={setEditorState}
+      />
+      <div>
+        {console.log('type html', typeof draftToHtml(convertToRaw(editorState.getCurrentContent())))}
+        <td dangerouslySetInnerHTML={{__html: draftToHtml(convertToRaw(editorState.getCurrentContent()))}} />
+      </div>
+      <textarea
+        disabled
+        value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}
+      />
+    </>
   );
 }
+
+// function DraftTextComponent({ content }) {
+//   const {
+//     setArrayContent,
+//   } = useContext(AppContext);
+
+//   const {
+//     textFormat: {
+//       color,
+//       fontSize,
+//       fontFamily,
+//     },
+//     span,
+//     link,
+//     text,
+//   } = content;
+
+//   const contentFunc = () => text
+//     .reduce((array, elementText, index) => {
+//       array.push(elementText);
+
+//       const objLink = link.find(({ position }) => position === index);
+
+//       if (objLink) {
+//         const linkText = objLink.linkText
+//           ? objLink.linkText
+//           : objLink.url
+        
+//         array.push(
+//           `<a href=${objLink.url}
+//             style='color:#5C3317;'
+//           >${linkText}</a>`
+//         );
+//         return array;
+//       }
+
+//       const objSpan = span.find(({ position }) => position === index);
+
+//       if (objSpan) {
+//         const stringStrong = `<strong `
+//           + `style='color:#5C3317;'`
+//           + `>`
+//           + `${objSpan.spanText}`
+//           + `</strong>`;
+//         console.log('stringStrong', stringStrong.length);
+//         array.push(stringStrong);
+//         return array;
+//       }
+
+//       return array;
+//     }, []);
+  
+//   // const [statusContent, setStatusContent] = useState();
+//   const text2 = useRef(contentFunc().join(''));
+  
+//   // const funcOla = ({ target }) => {
+//   //   console.log('olaa', target.innerText)
+//   //   // setStatusContent(target.innerText);
+//   // }
+
+//   const handleChange = evt => {
+//     // console.log('handleChange value', evt.target.value)
+//     console.log('handleChange Text', evt)
+//     text2.current = evt.target.value;
+//   };
+
+//   const handleBlur = () => {
+//     console.log('handleBlur', text2.current);
+//   };
+
+//   return (
+//     <div>
+//       <ContentEditable
+//         style={{
+//           color: '#21a809',
+//         }}
+//         html={text2.current}
+//         onBlur={handleBlur}
+//         onChange={handleChange} />
+//     </div>
+//   );
+// }
 
 // class DraftTextComponent extends React.Component {
 //   constructor() {
