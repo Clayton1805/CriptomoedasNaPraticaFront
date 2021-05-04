@@ -7,7 +7,7 @@ const ola = [
       color: '#23238E',
       fontFamily: "'Poppins', sans-serif",
       fontSize: '20px',
-    }
+    },
   },
   {
     type: 'text',

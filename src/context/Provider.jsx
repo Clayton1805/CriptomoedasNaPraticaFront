@@ -1,19 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-// import { saveStorage, loadStorage } from '../services/localStorage';
+import { saveStorage, loadStorage } from '../utils/localStorage';
 import AppContext from './AppContext';
 
-const data = require('../data');
 
 function Provider({ children }) {
-  const [arrayContent, setArrayContent] = useState(data);
-  const [editorState, setEditorState] = useState();  
+  const [user, setUser] = useState(loadStorage('user', {}));
+  useEffect(() => {
+    saveStorage('user', user);
+  }, [user]);
 
   const contextValue = {
-    arrayContent,
-    setArrayContent,
-    editorState,
-    setEditorState,
+    user,
+    setUser,
   };
 
   return (

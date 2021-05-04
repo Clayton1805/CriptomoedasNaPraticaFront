@@ -2,12 +2,12 @@ import { useContext } from "react";
 import AppContext from "../context/AppContext";
 
 function ContentTextComponent() {
-  const {
-    editorState,
-    setEditorState,
-  } = useContext(AppContext);
+  // const {
+  //   editorState,
+  //   setEditorState,
+  // } = useContext(AppContext);
 
-  return (editorState);
+  // return (editorState);
 }
 
 // function ContentTextComponent({ content }) {

@@ -5,12 +5,9 @@ import AppContext from '../context/AppContext';
 const data = require('../data');
 
 function ArticlePage() {
-  const {
-    editorState,
-    setEditorState,
-  } = useContext(AppContext);
+  // const [editorState, setEditorState] = useState();
 
-  return (editorState);
+  // return (editorState);
 }
 
 export default ArticlePage;

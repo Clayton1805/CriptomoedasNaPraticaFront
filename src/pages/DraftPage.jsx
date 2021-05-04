@@ -1,11 +1,12 @@
-import { useContext } from 'react';
-import AppContext from '../context/AppContext';
-import { DraftTextComponent, DraftTitleSecondaryComponent } from '../components';
+import { useState } from 'react';
+import { DraftTextComponent } from '../components';
+
+const data = require('../data');
 
 function DraftPage() {
-  const {
-    arrayContent,
-  } = useContext(AppContext);
+
+  const [arrayContent, setArrayContent] = useState(data);
+
   
 
   // const funcOla = ({ target }) => {
@@ -15,13 +16,12 @@ function DraftPage() {
 
   return (
     <>
-      {console.log('arrayContent', arrayContent)}
+      {/* {console.log('arrayContent', arrayContent)} */}
       <div name="conteúdo">
         {
           arrayContent.map((element) => {
             const content = element.content;
             switch (element.type) {
-              case 'titleSecondary': return <DraftTitleSecondaryComponent content={ content } />
               case 'text': return <DraftTextComponent content={ content } />;
               default: return <></>;
             }

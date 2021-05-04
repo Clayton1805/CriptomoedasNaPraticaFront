@@ -1,13 +1,17 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { Component, useContext, useRef, useState } from "react";
 // import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import AppContext from "../context/AppContext";
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
+// import { BlockNodeRecord } from 'BlockNodeRecord';
+
 import '../style/DraftTextComponent.css'
 import { ContentState, convertToRaw, EditorState } from "draft-js";
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
+
+import { Modifier } from 'draft-js';
 
 function DraftTextComponent({ content }) {
   // const {
@@ -16,6 +20,7 @@ function DraftTextComponent({ content }) {
   // } = useContext(AppContext);
   const html = '<p>Hey this <strong>editor</strong> rocks 😀</p>';
   const contentBlock = htmlToDraft(html);
+  // console.log('contentBlock.contentBlocks', contentBlock.contentBlocks)
   const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
   const editorState2 = EditorState.createWithContent(contentState);
   const [editorState, setEditorState] = useState(editorState2);  
@@ -24,13 +29,18 @@ function DraftTextComponent({ content }) {
     <>
       <Editor
         editorState={editorState}
-        wrapperClassName="demo-wrapper"
-        editorClassName="demo-editor"
+        // wrapperClassName="demo-wrapper"
+        // editorClassName="demo-editor"
         onEditorStateChange={setEditorState}
+        toolbarOnFocus
+        toolbarClassName='header_costumer'
+        // toolbarClassName="toolbar-class"
       />
       <div>
-        {console.log('type html', typeof draftToHtml(convertToRaw(editorState.getCurrentContent())))}
-        <td dangerouslySetInnerHTML={{__html: draftToHtml(convertToRaw(editorState.getCurrentContent()))}} />
+        {console.log('JSON', convertToRaw(editorState.getCurrentContent()))}
+        { console.log(
+          <td onClick={ ({target}) => console.log('target', target.innerText) } dangerouslySetInnerHTML={{__html: draftToHtml(convertToRaw(editorState.getCurrentContent()))}} />
+        )}
       </div>
       <textarea
         disabled
@@ -39,6 +49,7 @@ function DraftTextComponent({ content }) {
     </>
   );
 }
+
 
 // function DraftTextComponent({ content }) {
 //   const {
