@@ -18,10 +18,11 @@ function DraftTextComponent({ content }) {
   //   editorState,
   //   setEditorState,
   // } = useContext(AppContext);
-  const html = '<p>Hey this <strong>editor</strong> rocks 😀</p>';
+  const html = '<p>Hey this <strong>editor</strong> rocks 😀</p><p>iiiiii</p><ol><li>hhhhh</li><li>ei</li></ol><p>ola</p>';
   const contentBlock = htmlToDraft(html);
-  // console.log('contentBlock.contentBlocks', contentBlock.contentBlocks)
+  // console.log('VAMOS LA', )
   const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+  console.log('editorState inicial', contentState)
   const editorState2 = EditorState.createWithContent(contentState);
   const [editorState, setEditorState] = useState(editorState2);  
 
@@ -37,15 +38,17 @@ function DraftTextComponent({ content }) {
         // toolbarClassName="toolbar-class"
       />
       <div>
-        {console.log('JSON', convertToRaw(editorState.getCurrentContent()))}
-        { console.log(
+        {console.log('editorState ativo', editorState.getCurrentContent())}
+        {console.log('convertToRaw', convertToRaw(editorState.getCurrentContent()))}
+        {/* { console.log(
           <td onClick={ ({target}) => console.log('target', target.innerText) } dangerouslySetInnerHTML={{__html: draftToHtml(convertToRaw(editorState.getCurrentContent()))}} />
-        )}
+        )} */}
       </div>
       <textarea
         disabled
         value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}
       />
+      {console.log('htmlToDraft OOOOII', convertToRaw(ContentState.createFromBlockArray(htmlToDraft(draftToHtml(convertToRaw(editorState.getCurrentContent()))).contentBlocks)))}
     </>
   );
 }
